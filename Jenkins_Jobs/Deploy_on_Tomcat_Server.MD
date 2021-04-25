@@ -9,16 +9,18 @@
 ## Create Tomcat server:
 - On AWS launch an Amazon Linux instance.
 - Keep everything as default, just edit the folowing:
-Tag:  Name : Tomcat_Server   <br/>
-Security group: Create new security group (or use DevOps_Project_SG creating when setting up Jenkins server), with the following Inbound rules:  <br/>
-Port range   Protocol   Source          Security groups  <br/>
-8080	       TCP      	0.0.0.0/0	      DevOps_Project_SG  <br/>
-8080	       TCP      	::/0	          DevOps_Project_SG  <br/>
-22	         TCP	      0.0.0.0/0	      DevOps_Project_SG  --> Needed to SSH  to the VM  <br/>
+```
+Tag:  Name : Tomcat_Server
+Security group: Create new security group (or use DevOps_Project_SG creating when setting up Jenkins server), with the following Inbound rules:
+Port range   Protocol   Source          Security groups
+8080	       TCP      	0.0.0.0/0	      DevOps_Project_SG
+8080	       TCP      	::/0	          DevOps_Project_SG
+22	         TCP	      0.0.0.0/0	      DevOps_Project_SG  --> Needed to SSH  to the VM
 
-Outbound rules: <br/>
-Port range   Protocol   Destination     Security groups  <br/>
+Outbound rules:
+Port range   Protocol   Destination     Security groups 
 All	     All	0.0.0.0/0	DevOps_Project_SG
+```
 
 ### Adding Deployment steps
 
