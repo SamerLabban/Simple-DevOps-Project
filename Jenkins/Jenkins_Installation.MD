@@ -32,12 +32,12 @@ AWS: User: ec2-user
 ```
 
 ## Install Java
-To become root: sudo su -
-We need root priviledges to do installation
+- To become root: sudo su -
+- We need root priviledges to do installation
 
-To check java version: java -version
-To remove java 1.7 that comes installed on AWS instance, use:  yum remove java-1.7.0*
-To install java 1.8, do: yum install java-1.8*
+- To check java version: java -version
+- To remove java 1.7 that comes installed on AWS instance, use:  yum remove java-1.7.0*
+- To install java 1.8, do: yum install java-1.8*
 
 1. We will be using open java for our demo, Get the latest version from http://openjdk.java.net/install/
    ```sh
@@ -92,9 +92,11 @@ To install java 1.8, do: yum install java-1.8*
    ```
  
 ## Install Jenkins
+```
 Now to install Jenkins, on the linux instance, if you do: yum install jenkins --> this will not work because it does not have the jenkins reporsitories.
 To download jenkins, in your browser search for "jenkins download". --> go to first download link --> You'll see "Long-term Support" (this is stable version)--> click on "Redhat/Fedora/CentOS"
 You'll see than the commands to use to set the Jenkins repository in our server.
+```
 
 You can install jenkins using the rpm or by setting up the repo. We will set up the repo so that we can update it easily in the future.
 1. Get the latest version of jenkins from https://pkg.jenkins.io/redhat-stable/ and install
