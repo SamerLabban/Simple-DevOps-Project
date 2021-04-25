@@ -9,8 +9,9 @@ Jenkins is a self-contained Java-based program, ready to run out-of-the-box, wit
 1. Java v1.8.x 
 
 ## AWS EC2 Instance:
-On AWS launch an Amazon Linux instance.
-Keep everything as default, just edit the folowing:
+- On AWS launch an Amazon Linux instance.
+- Keep everything as default, just edit the folowing:
+```sh
 Tag:  Name : Jenkins-Server
 Security group: Create new security group, with the following Inbound rules:
 Port range   Protocol   Source          Security groups
@@ -21,11 +22,14 @@ Port range   Protocol   Source          Security groups
 Outbound rules:
 Port range   Protocol   Destination     Security groups
 All	     All	0.0.0.0/0	DevOps_Project_SG
+```
 
 ## Connect to EC2 Instance:
+```
 SSH to your Instance using putty or MobaXterm (pem key file needed for both).
 IP address: Use public IP of EC2 instance.
 AWS: User: ec2-user
+```
 
 ## Install Java
 To become root: sudo su -
