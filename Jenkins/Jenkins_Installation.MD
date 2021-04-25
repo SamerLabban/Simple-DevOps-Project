@@ -32,12 +32,12 @@ AWS: User: ec2-user
 ```
 
 ## Install Java
-- To become root: sudo su -
-- We need root priviledges to do installation
+To become root: sudo su -  <br />
+We need root priviledges to do installation <br />
 
-- To check java version: java -version
-- To remove java 1.7 that comes installed on AWS instance, use:  yum remove java-1.7.0*
-- To install java 1.8, do: yum install java-1.8*
+To check java version: java -version  <br />
+To remove java 1.7 that comes installed on AWS instance, use:  yum remove java-1.7.0*  <br />
+To install java 1.8, do: yum install java-1.8*   <br />
 
 1. We will be using open java for our demo, Get the latest version from http://openjdk.java.net/install/
    ```sh
