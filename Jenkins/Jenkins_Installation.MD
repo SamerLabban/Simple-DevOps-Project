@@ -29,6 +29,14 @@ All	     All	0.0.0.0/0	DevOps_Project_SG
 SSH to your Instance using putty or MobaXterm (pem key file needed for both).
 IP address: Use public IP of EC2 instance.
 AWS: User: ec2-user
+
+Change hostname to jenkins, to make it easier to identify:
+In linux shell, type: hostname jenkins
+[root@ip-172-31-13-3 ~]# hostname jenkins
+[root@ip-172-31-13-3 ~]#
+[root@ip-172-31-13-3 ~]# exit
+logout
+[ec2-user@ip-172-31-13-3 ~]$ sudo su -
 ```
 
 ## Install Java
