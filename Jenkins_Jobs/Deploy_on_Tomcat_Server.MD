@@ -11,7 +11,7 @@
 - Keep everything as default, just edit the folowing:  <br/>
 Tag:  Name : Tomcat_Server  <br/>
 Security group: Create new security group (or use DevOps_Project_SG creating when setting up Jenkins server), with the following Inbound rules:  <br/>
-|Port range  |Protocol  |Source         |Security groups |
+|Port range  |Protocol  |Source         |Security groups
 |8080	       |TCP      	|0.0.0.0/0	    |DevOps_Project_SG |
 |8080	       |TCP      	|::/0	          |DevOps_Project_SG |
 |22	         |TCP	      |0.0.0.0/0	    |DevOps_Project_SG  --> Needed to SSH  to the VM  |
