@@ -56,12 +56,11 @@ Outbound rules:  <br/>
       - When deploying war file to tomcat container, you specify to deploy the war file, the file is located under folder having same name as the jenkins job. You can also specify "**/*.war", which will pick any war file under the job's workspace.
       - WAR/EAR files : `**/*.war`
       - Containers : `Tomcat 8.x`
+         - To deploy on tomcat server, tomcat should accept jenkins authentication.
          - Credentials: `deployer` (user created on above)
          - Tomcat URL : `http://<PUBLIC_IP>:8080`
 
 Save and run the job now.
-
-To deploy on tomcat server, tomcat should accept jenkins authentication.
 
 The default directoy for tomcat app is "/opt/tomcat/webapps", so whenever we run the job, it'll copy war files to that webapp location. <br/>
 ```
@@ -78,5 +77,5 @@ drwxr-x---  4 root root   54 Apr 18 04:55 webapp
 ```
 
 To access the tomcat application in the browser, you need to specify the name of the war file (which is webapp in our case): <br/>
-http://15.223.121.206:8080/webapp
+http://<TOMCAT_SERVER_PUBLIC_IP>:8080/webapp
 
