@@ -9,7 +9,7 @@
 ## Create Tomcat server:
 - On AWS launch an Amazon Linux instance.
 - Keep everything as default, just edit the folowing:
-```
+```sh
 Tag:  Name : Tomcat_Server
 Security group: Create new security group (or use DevOps_Project_SG creating when setting up Jenkins server), with the following Inbound rules:
 Port range   Protocol   Source          Security groups
