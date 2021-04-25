@@ -92,11 +92,9 @@ AWS: User: ec2-user
    ```
  
 ## Install Jenkins
-```
-Now to install Jenkins, on the linux instance, if you do: yum install jenkins --> this will not work because it does not have the jenkins reporsitories.
-To download jenkins, in your browser search for "jenkins download". --> go to first download link --> You'll see "Long-term Support" (this is stable version)--> click on "Redhat/Fedora/CentOS"
-You'll see than the commands to use to set the Jenkins repository in our server.
-```
+Now to install Jenkins, on the linux instance, if you do: yum install jenkins --> this will not work because it does not have the jenkins reporsitories. <br />
+To download jenkins, in your browser search for "jenkins download". --> go to first download link --> You'll see "Long-term Support" (this is stable version)--> click on "Redhat/Fedora/CentOS"  <br />
+You'll see than the commands to use to set the Jenkins repository in our server. <br />
 
 You can install jenkins using the rpm or by setting up the repo. We will set up the repo so that we can update it easily in the future.
 1. Get the latest version of jenkins from https://pkg.jenkins.io/redhat-stable/ and install
