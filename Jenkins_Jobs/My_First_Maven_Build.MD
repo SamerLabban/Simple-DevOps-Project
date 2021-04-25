@@ -18,3 +18,9 @@ We know how to use work with each and Git, Jenkins independently. What if you wa
    - *Build:*
      - Root POM:`pom.xml`
      - Goals and options: `clean install package`
+
+### Note
+When the maven job runs in jenkins, you can check the Workspace folder and see the files from the git repo copied there, and the generated files will be in the workspace in folder webapp/target.  <br />
+You can also access the files on the VM, the jenkins files will be located at: cd /var/lib/jenkins/workspace/   <br />
+
+To find file context.xml in linux you do:  find / -name context.xml
