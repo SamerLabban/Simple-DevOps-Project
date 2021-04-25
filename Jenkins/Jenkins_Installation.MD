@@ -11,7 +11,7 @@ Jenkins is a self-contained Java-based program, ready to run out-of-the-box, wit
 ## AWS EC2 Instance:
 - On AWS launch an Amazon Linux instance.
 - Keep everything as default, just edit the folowing:
-```sh
+```
 Tag:  Name : Jenkins-Server
 Security group: Create new security group, with the following Inbound rules:
 Port range   Protocol   Source          Security groups
