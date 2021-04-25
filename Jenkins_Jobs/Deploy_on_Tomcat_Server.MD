@@ -8,6 +8,7 @@
 
 ### Create Tomcat server
 - On AWS launch an Amazon Linux instance.
+- Create a user: deployer   password: deployer , this will be used by jenkins to authenticate to the tomcat server when deploying.
 - Keep everything as default, just edit the folowing:  <br/>
 Tag:  Name : Tomcat_Server  <br/>
 Security group: Create new security group (or use DevOps_Project_SG creating when setting up Jenkins server), with the following Inbound rules:  <br/>
