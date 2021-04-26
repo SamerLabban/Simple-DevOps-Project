@@ -60,4 +60,18 @@ Enable connection between Docker-host and Jenkins
                 docker run -d --name simple-devops-container -p 8080:8080 simple-devops-image;
                 ```
 
-Save and run the job now.
+Save and run the job now. <br/>
+Open webpage page in browser by going to: <Public_IP>:8080/webapp  <br/>
+The following will access the apache default page: <Public_IP>:8080
+
+### Note
+If you make change to the code and want to make another deployment, you'll get a message saying that container name already in use. So you cannot deploy again using same container name. <br/>
+Jenkins cannot manage deployments properly. For that we need to use available deployment tools, such as Ansible. <br/>
+Another issue with Jenkins, is that in our case we deployed to a dev host that we already registered. But imagine you have 100 systems where you want to deploy to, so you need to register all these with Jenkins which is hard to achieve. Therefore, we'll use Jenkins only as a build tool and we'll use Jenkins as a deployment tool.
+
+### Troubleshooting: Unable to push docker image
+If you are unable to push docker image it means that you haven't logged into dockerhub as a user which you are trying to push. <br/>
+During my course, I ran playbook as a "ansadmin" user (because there is a typo in the "become: true" so it didn't execute as root user). If you are executing as a root user then you should log in to DockerHub as a root user. <br/>
+In short, you can do either one of the below  <br/>
+1. remove or comment "become: true" in the playbook  or <br/>
+2. Login to dockerhub as a root user
