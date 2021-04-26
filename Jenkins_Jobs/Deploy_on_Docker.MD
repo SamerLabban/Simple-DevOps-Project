@@ -49,7 +49,7 @@ Enable connection between Docker-host and Jenkins
 
 Save and run the job now.
 
-### Fiels on docker host
+### Artifacts on docker host
 To check where the artifacts are located on tomcat server:
 ```
 cd Deploy_on_Tomcat_server/   --> jenikns job name
