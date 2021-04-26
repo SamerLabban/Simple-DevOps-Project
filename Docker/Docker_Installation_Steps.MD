@@ -25,7 +25,6 @@
    ```
    To see groups on docker host, run: <br/>
    cat /etc/group  <br/>
-   --> The following group should exist in the file: "docker:x:<id>:"  <br/>
    
    To see the user id is part of which group, do:  <br/>
    id dockeradmin
@@ -45,30 +44,30 @@
    ```
    
 2. Example:
-```
-docker pull tomcat:latest
-docker run --name tomcat-container -p 8080:8080 tomcat:latest
-To run container in de-attached mode, do:
-docker run -d --name tomcat-container -p 8080:8080 tomcat:latest
-```
-To login to your container, run:  <br/>
-```
-docker exec -it tomcat-container /bin/bash
-```
+   ```
+   docker pull tomcat:latest
+   docker run --name tomcat-container -p 8080:8080 tomcat:latest
+   To run container in de-attached mode, do:
+   docker run -d --name tomcat-container -p 8080:8080 tomcat:latest
+   ```
+   To login to your container, run:  <br/>
+   ```
+   docker exec -it tomcat-container /bin/bash
+   ```
 
-In tomcat image the webapp files are stored under folder "webapps.dist" instead of "webapps", so you'll need to copy content to webapps:
-```
-cd webapps.dist/
-cp -R * ../webapps
-cd ../webapps
-```
-
-To avoid having to do the above, use older version of tomcat:
-```
-docker pull tomcat:8.0  --> this has files in webapps folder.
-docker run -d --name tomcat-8 -p 8081:8080 tomcat:8.0
-```
-Note: port 8081 used above should be opened in AWS at security level (already done in our case).
+   In tomcat image the webapp files are stored under folder "webapps.dist" instead of "webapps", so you'll need to copy content to webapps:
+   ```
+   cd webapps.dist/
+   cp -R * ../webapps
+   cd ../webapps
+   ```
+   
+  To avoid having to do the above, use older version of tomcat:
+  ```
+  docker pull tomcat:8.0  --> this has files in webapps folder.
+  docker run -d --name tomcat-8 -p 8081:8080 tomcat:8.0
+  ```
+  Note: port 8081 used above should be opened in AWS at security level (already done in our case).
 
 ## Docker Installation on CentOS server
 ##### Referance URL : https://docs.docker.com/install/linux/docker-ce/centos/#install-using-the-repository
