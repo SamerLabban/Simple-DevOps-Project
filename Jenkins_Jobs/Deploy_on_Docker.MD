@@ -48,3 +48,41 @@ Enable connection between Docker-host and Jenkins
 	 
 
 Save and run the job now.
+
+### Fiels on docker host
+To check where the artifacts are located on tomcat server:
+```
+cd Deploy_on_Tomcat_server/   --> jenikns job name
+cd webapp/target/
+```
+--> path to add in Jenkins: webapp/target/*.war  <br/>
+Remove prefix --> is used to remove directory structure. By default, it copies all directory structure.
+
+Check what is in user dockeradmin home directory:  <br/>
+On docker-host:
+```
+su - dockeradmin 
+pwd
+```
+
+After the deploy job runs successfully, you see the .war file on your docker-host:
+```
+[dockeradmin@ip-172-31-18-169 ~]$ cd webapp/target/
+[dockeradmin@ip-172-31-18-169 target]$ ls
+webapp.war
+```
+
+If you want to remove the webapp/target structure when deploying, you go to your jenkins job --> configure --> Post-Build Actions: Send Build Artifacts over SSH --> Remove Prefix: webapp/target  <br/>
+Do the following on docker-host: 
+```
+[dockeradmin@ip-172-31-18-169 target]$ cd ~
+[dockeradmin@ip-172-31-18-169 ~]$ rm -rf webapp/
+```
+Then build the jenkins docker deploy job.  <br/>
+Now verify on docker-host to see that war file is copied under the home directory:
+```
+[dockeradmin@ip-172-31-18-169 ~]$ pwd
+/home/dockeradmin
+[dockeradmin@ip-172-31-18-169 ~]$ ls
+webapp.war
+```
