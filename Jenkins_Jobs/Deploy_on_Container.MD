@@ -5,7 +5,8 @@
 
 1. Jenkins server 
 1. Docker-host server 
-1. `Dockerfile` under *`/home/dockeradmin`* in user home directory on docker host 
+1. `Dockerfile` under *`/home/dockeradmin`* in user home directory on docker host <br/>
+    Impersonnate as dockeradmin first before creating the dockerfile under path *`/home/dockeradmin`*: su - dockeradmin 
    ```sh 
    # Pull tomcat latest image from dockerhub 
    From tomcat
