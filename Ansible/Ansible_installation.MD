@@ -24,6 +24,11 @@ SSH into created instance and install the following (impersonnate as root first:
    ansible --version
    ```
    
+1. Create Ansible directory
+   ```sh
+   mkdir /etc/ansible
+   ```
+
 1. Create a user called ansadmin (on Control node and Managed host)  
    ```sh
    useradd ansadmin
