@@ -4,10 +4,14 @@ Ansible is an open-source automation platform. It is very, very simple to set up
 
 ### Pre-requisites
 
-1. An AWS EC2 instance (on Control node)
+1. An AWS EC2 instance (on Control node) <br/>
+   Leave everything as default, and just specify the following:  <br/>
+   Tag: Name: Ansible_Server <br/>
+   Select an existing securit group (previously created group): DevOps_Project_SG
 
 ### Installation steps:
 #### on Amazon EC2 instance
+SSH into created instance and install the following (impersonnate as root first: sudo su -)
 
 1. Install python and python-pip
    ```sh
