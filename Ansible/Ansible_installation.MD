@@ -11,7 +11,7 @@ Ansible is an open-source automation platform. It is very, very simple to set up
 
 ### Installation steps:
 #### on Amazon EC2 instance
-SSH into created instance and install the following (impersonnate as root first: sudo su -)
+SSH into created instance and install the following (impersonnate as root first: sudo su -
 
 1. Install python and python-pip
    ```sh
