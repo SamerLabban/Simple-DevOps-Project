@@ -23,6 +23,12 @@ SSH into created instance and install the following (impersonnate as root first:
     pip install ansible
    ansible --version
    ```
+   Troubleshooting:
+   ```sh
+   If you are unable to install ansible with "yum install ansible" or "pip install ansible", Please make sure you have installed python first.
+   then try below command.
+   sudo amazon-linux-extras install ansible2
+   ```
    
 1. Create Ansible directory
    ```sh
@@ -66,7 +72,13 @@ SSH into created instance and install the following (impersonnate as root first:
    # Save the file, then reload it:
    service sshd reload
    ```
-
+   
+1. Switch back to root user. Change hostname to make it easier to identify:
+   ```sh
+   hostname ansible-control-node
+   ```
+   Exit and re-impersonnate as root to see the change.
+   
 1. Log in as a ansadmin user on master and generate ssh key (on Control node)
    ```sh 
    sudo su - ansadmin
@@ -79,22 +91,49 @@ SSH into created instance and install the following (impersonnate as root first:
    # We'll need to copy the public key and keep the private key secure. If someone has access to the private key, they'll be able to access your system.
    ```
    
-1. Copy keys onto all ansible managed hosts (on Control node)
+1. Switch to docker-host (not ansible-host you are now on):
+   Create user ansadmin and set password
+   ```sh
+   useradd ansadmin
+   passwd ansadmin
+   ```
+   Password Authntication is already enabled on this host, so no issue to login. <br/>
+   Copy the keys to our docker host system. <br/>
+   Do "ip addr" and copy private key. You'll need this key when copying keys from ansible host in following step. <br/>
+   Docker host will communicate with ansible host using private key, since both are in same VPC.
+
+1. From Ansible Host, Copy keys onto all ansible managed hosts (on Control node)
    ```sh 
+   su - ansadmin
    ssh-copy-id ansadmin@<target-server>
    ```
-   
-1. Switch back to root user. Change hostname to make it easier to identify:
-   ```sh
-   hostname ansible-control-node
-   ```
-   Exit and re-impersonnate as root to see the change.
+   You'll need to pass the password the first time you run the ssh copy command, to copy the private keys. <br/>
+   But the second time you ssh to docker host from the ansible host, it won't ask for the password: <br/>
+   ssh ansadmin@<target-server>
 
-1. Create a directory /etc/ansible (done in previous steps) and create an inventory file called "hosts" add control node and managed hosts IP addresses to it. 
- 
 ### Validation test
 
-   
+1. Test the connectivity by doing a ping test
+   From the ansible host:
+   ```sh
+   su - ansadmin
+   cd /etc/ansible/
+   ls # you'll see that hosts file does not exist
+   # create an inventory file called "hosts" add control node and managed hosts IP addresses to it.
+   sudo vi hosts
+   # Add the following lines
+   <private ip of docker host> # example: 172.31.18.245
+   localhost  # this is my local ansible host
+   # Save the file
+   ```
+   Do a ping test by running the following command:  ansible all -m ping   <br/>
+   Above command will run ping module on hosts file. <br/>
+   You'll see that it is able to ping remoe host (docker host). It fails to ping local host because we did not copy keys to local host. <br/>
+   So copy keys to local host by running: <br/>
+   ssh-copy-id localhost  <br/>
+   Run the ping command again:  ansible all -m ping   <br/>
+   You'll see that it successfully pings both systems.
+
 1. Run ansible command as ansadmin user it should be successful (Master)
    ```sh 
    ansible all -m ping
