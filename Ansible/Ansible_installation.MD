@@ -38,30 +38,59 @@ SSH into created instance and install the following (impersonnate as root first:
    ```sh
    echo "ansadmin ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
    ```
+   or use visudo command as below:
+   ```sh
+   visudo
+   # do shift G to go the end of the file. Then do o to go into insert mode. Add the following line:
+   ansadmin ALL=(ALL)      NOPASSWD: ALL
+   # So now it'll not ask for the password when you login as a root.
+   ```
    
-1. Log in as a ansadmin user on master and generate ssh key (on Control node)
-   ```sh 
-   sudo su - ansadmin
-   ssh-keygen
-   ```
-1. Copy keys onto all ansible managed hosts (on Control node)
-   ```sh 
-   ssh-copy-id ansadmin@<target-server>
-   ```
-
 1. Ansible server used to create images and store on docker registry. Hence install docker, start docker services and add ansadmin to the docker group. 
    ```sh
    yum install docker
    
    # start docker services 
-   service docker start
+   service docker status
    service docker start 
    
    # add user to docker group 
    usermod -aG docker ansadmin
-
+   ```   
+   
+1. By default user authentication is not enabled in AWS instance. So enable it:
+   ```sh
+   vi /etc/shh/sshd_config
+   # Change PasswrodAuthentication to yes
+   PasswordAuhthentication yes
+   # Save the file, then reload it:
+   service sshd reload
    ```
-1. Create a directory /etc/ansible and create an inventory file called "hosts" add control node and managed hosts IP addresses to it. 
+
+1. Log in as a ansadmin user on master and generate ssh key (on Control node)
+   ```sh 
+   sudo su - ansadmin
+   ssh-keygen
+   ```
+   Keys are usually generated under .ssh folder:
+   ```sh
+   cd .ssh
+   # You'll see files "id_rsa" --> private key,  and "id_rsa.pub" --> public key
+   # We'll need to copy the public key and keep the private key secure. If someone has access to the private key, they'll be able to access your system.
+   ```
+   
+1. Copy keys onto all ansible managed hosts (on Control node)
+   ```sh 
+   ssh-copy-id ansadmin@<target-server>
+   ```
+   
+1. Switch back to root user. Change hostname to make it easier to identify:
+   ```sh
+   hostname ansible-control-node
+   ```
+   Exit and re-impersonnate as root to see the change.
+
+1. Create a directory /etc/ansible (done in previous steps) and create an inventory file called "hosts" add control node and managed hosts IP addresses to it. 
  
 ### Validation test
 
