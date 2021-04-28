@@ -23,12 +23,10 @@ SSH into created instance and install the following (impersonnate as root first:
     pip install ansible
    ansible --version
    ```
-   Troubleshooting:
-   ```sh
+   Troubleshooting: <br/>
    If you are unable to install ansible with "yum install ansible" or "pip install ansible", Please make sure you have installed python first.
-   then try below command.
+   then try below command. <br/>
    sudo amazon-linux-extras install ansible2
-   ```
    
 1. Create Ansible directory
    ```sh
@@ -40,7 +38,7 @@ SSH into created instance and install the following (impersonnate as root first:
    useradd ansadmin
    passwd ansadmin
    ```
-1. Below command grant sudo access to ansadmin user. But we strongly recommended using "visudo" command if you are aware vi or nano editor.  (on Control node and Managed host)
+1. Below command grants sudo access to ansadmin user. But we strongly recommended using "visudo" command if you are aware vi or nano editor.  (on Control node and Managed host)
    ```sh
    echo "ansadmin ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
    ```
@@ -52,7 +50,7 @@ SSH into created instance and install the following (impersonnate as root first:
    # So now it'll not ask for the password when you login as a root.
    ```
    
-1. Ansible server used to create images and store on docker registry. Hence install docker, start docker services and add ansadmin to the docker group. 
+1. Ansible server is used to create images and store them on docker registry. Hence install docker, start docker services and add ansadmin to the docker group. 
    ```sh
    yum install docker
    
