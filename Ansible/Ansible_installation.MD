@@ -64,7 +64,7 @@ SSH into created instance and install the following (impersonnate as root first:
    
 1. By default user authentication is not enabled in AWS instance. So enable it:
    ```sh
-   vi /etc/shh/sshd_config
+   vi /etc/ssh/sshd_config
    # Change PasswrodAuthentication to yes
    PasswordAuhthentication yes
    # Save the file, then reload it:
@@ -83,11 +83,9 @@ SSH into created instance and install the following (impersonnate as root first:
    ssh-keygen
    ```
    Keys are usually generated under .ssh folder:
-   ```sh
-   cd .ssh
-   # You'll see files "id_rsa" --> private key,  and "id_rsa.pub" --> public key
-   # We'll need to copy the public key and keep the private key secure. If someone has access to the private key, they'll be able to access your system.
-   ```
+   cd .ssh  <br/>
+   You'll see files "id_rsa" --> private key,  and "id_rsa.pub" --> public key   <br/>
+   We'll need to copy the public key and keep the private key secure. If someone has access to the private key, they'll be able to access your system.
    
 1. Switch to docker-host (not ansible-host you are now on):
    Create user ansadmin and set password
