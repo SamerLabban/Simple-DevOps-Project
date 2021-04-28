@@ -105,7 +105,9 @@ SSH into created instance and install the following (impersonnate as root first:
    ```
    You'll need to pass the password the first time you run the ssh copy command, to copy the private keys. <br/>
    But the second time you ssh to docker host from the ansible host, it won't ask for the password: <br/>
+   ```sh
    ssh ansadmin@<target-server>
+   ```
 
 ### Validation test
 
