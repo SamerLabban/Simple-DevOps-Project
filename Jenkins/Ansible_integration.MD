@@ -15,7 +15,8 @@ Enable connection between Ansible and Jenkins
 - `Manage Jenkins` > `Configure System` > `Publish Over SSH` > `SSH Servers` 
 
 	- SSH Servers:
-		- Hostname:`<ServerIP>`
+		- Name: ansible-server
+		- Hostname:`<ServerIP>`  (use private ip of ansible host if it is on same vpc as jenkins host, else use public ip)
 		- username: `ansadm`
 		- password: `*******`
 
