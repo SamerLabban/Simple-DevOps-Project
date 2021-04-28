@@ -15,29 +15,55 @@
 
    # copy war file on to container 
    COPY ./webapp.war /usr/local/tomcat/webapps
-1. Create `create-docker-image.yml` unser *`/opt/docker`* on Ansible server **[Get Help Here]()**
+   
+1. Create Ansible Playbook to create docker image using dockerfile and webapp.war file
+   Create `create-docker-image.yml` unser *`/opt/docker`* on Ansible server **[Get Help Here]()**  <br/>
    ```sh
    ---
    - hosts: all
-     #ansadmin doesn't need root access to create an image
+     #ansadmin doesn't need root access to create an image, but you can give it root access with the command below:
      become: true 
 
      tasks:
-     - name: building docker image
+     - name: build docker image using war file
        command: "docker build -t simple-devops-image ." 
+       # specify on which directory you want to execute this command. chdir is change directory
        args:
          chdir: /opt/docker
    ```
-1. Create `create-docker-image.yml` under *`/opt/docker`* on Ansible server **[Get Help Here]()**
+   You can also create above file as shown in option 2 in file: Jenkins_Jobs/create-docker-image.yml 
+
+1. Execute above Ansible playbook
+   Before executing the playbook, you need to create "hosts" file, and add into it the hosts you want to run the playbook on (where the image will be created). <br/>
+   cat /etc/ansible/hosts  <br/>
+   This will shows the hosts we added in the file we creted before. <br/>
+   Create a new file in /opt/docker folder, where you created the ansible playbook:  <br/>
+   vi hosts   <br/>
+   Add the follwoing line into it to create the image on ansible host only for now (later we specify other target hosts):  localhost   <br/>
+   Execute ansible playbook: <br/>
+   ansible-playbook -i hosts simple-devops-image.yml --check   <br/>
+   Note: "-check" only shows you how the playbook is going to run. It does not actually execute it or create the image. It just checks if everything is fine. <br/>
+   Rerun the command again without the check: <br/>
+   ansible-playbook -i hosts simple-devops-image.yml   <br/>
+   Now if you do "docker images", you'll see the image created. <br/>
+   However we need to run the above playbook using Jenkins.
+
+1. Add the task below to the above Ansible playbook. This task is to create the container. (Only copy the part where you ahve name and command)
+   Create `create-docker-image.yml` under *`/opt/docker`* on Ansible server **[Get Help Here]()**
    ```ssh
    ---
    - hosts: all
      become: ture
 
      tasks:
-     - name: creating docker image using docker command
+     - name: create container using simple-devops-image
        command: docker run -d --name simple-devops-container -p 8080:8080 simple-devops-image
    ```
+   Rename the file create-docker-image.yml to create-docker-project.yml, since now we are not just creating the image, but we are running it also: <br/>
+   mv create-docker-image.yml create-docker-project.yml <br/>
+   Run the ansible playbook: <br/>
+   ansible-playbook -i hosts simple-devops-project.yml   <br/>
+   Now if you do "docker images", you'll see the image created. And if you do "docker container ps", you'll see the container created and running.
 
 ### Integration between Ansible-control-node and Jenkins
 
