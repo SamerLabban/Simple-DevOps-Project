@@ -77,7 +77,17 @@ Enable connection between Ansible-control-node and Jenkins
        - `Transfers` >  `Transfer set`
             - Source files: `webapp/target/*.war`
 	       - Remove prefix: `webapp/target`
-	       - Remote directory: `//opt//docker`
+	       - Instead of using home directory of user, we'll create a new directory: <br/>
+		 On Ansible host: sudo su -   (either impersonate as root, or run sudo before below commands) <br/>
+		                  cd /opt   <br/>
+		                  sudo mkdir docker  <br/>
+				  # Give sudo access for ansadmin on this directory, so if we are copying anything from Jenkins it does not give permission issues:  <br/>
+				  sudo chown -R ansadmin:ansadmin /opt/docker    <br/>
+				  # So now the folder "docker" is owned by ansadmin  <br/> 
+				  # We'll use this directory to store our artifacts.  <br/>
+	         Remote directory: `//opt//docker`   <br/>
+	         We put double slash above because it does not take special characters.   <br/>
+	       - After createing this job and before adding exec command, you can build the job and see if it is copying the artifacts to docker directory on ansible host.
 	       - Exec command: 
                 ```sh 
                 ansible-playbook -i /opt/docker/hosts /opt/docker/create-docker-image.yml;
