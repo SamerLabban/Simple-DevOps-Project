@@ -4,7 +4,7 @@
   become: true
 
   tasks:
-  - name: creating docker image using docker command
+  - name: creating docker container using docker command
     command: docker run -d --name simple-devops-container -p 8080:8080 simple-devops-image
 	
 # option-2 : creating docker container using docker_container module 	
