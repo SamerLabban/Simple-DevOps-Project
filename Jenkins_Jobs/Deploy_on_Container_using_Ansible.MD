@@ -41,14 +41,14 @@
    vi hosts   <br/>
    Add the follwoing line into it to create the image on ansible host only for now (later we specify other target hosts):  localhost   <br/>
    Execute ansible playbook: <br/>
-   ansible-playbook -i hosts simple-devops-image.yml --check   <br/>
+   ansible-playbook -i hosts create-docker-image.yml --check   <br/>
    Note: "-check" only shows you how the playbook is going to run. It does not actually execute it or create the image. It just checks if everything is fine. <br/>
    Rerun the command again without the check: <br/>
-   ansible-playbook -i hosts simple-devops-image.yml   <br/>
+   ansible-playbook -i hosts create-docker-image.yml   <br/>
    Now if you do "docker images", you'll see the image created. <br/>
    However we need to run the above playbook using Jenkins.
 
-1. Add the task below to the above Ansible playbook. This task is to create the container. (Only copy the part where you ahve name and command)
+1. Add the task below to the above Ansible playbook. This task is to create the container. (Only copy the part where you have name and command)
    Create `create-docker-image.yml` under *`/opt/docker`* on Ansible server **[Get Help Here]()**
    ```ssh
    ---
@@ -57,12 +57,12 @@
 
      tasks:
      - name: create container using simple-devops-image
-       command: docker run -d --name simple-devops-container -p 8080:8080 simple-devops-image
+       command: docker run -d --name create-docker-container -p 8080:8080 simple-devops-image
    ```
    Rename the file create-docker-image.yml to create-docker-project.yml, since now we are not just creating the image, but we are running it also: <br/>
    mv create-docker-image.yml create-docker-project.yml <br/>
    Run the ansible playbook: <br/>
-   ansible-playbook -i hosts simple-devops-project.yml   <br/>
+   ansible-playbook -i hosts create-docker-project.yml   <br/>
    Now if you do "docker images", you'll see the image created. And if you do "docker container ps", you'll see the container created and running.
 
 ### Integration between Ansible-control-node and Jenkins
