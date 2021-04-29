@@ -113,10 +113,32 @@ Enable connection between Ansible-control-node and Jenkins
 				  # We'll use this directory to store our artifacts.  <br/>
 	         Remote directory: `//opt//docker`   <br/>
 	         We put double slash above because it does not take special characters.   <br/>
-	       - After createing this job and before adding exec command, you can build the job and see if it is copying the artifacts to docker directory on ansible host.
+	       - After creating this job and before adding exec command, you can build the job and see if it is copying the artifacts to docker directory on ansible host.
 	       - Exec command: 
                 ```sh 
                 ansible-playbook -i /opt/docker/hosts /opt/docker/create-docker-image.yml;
                 ```
-
-Save and run the job now.
+	       - Remove exisiting images and containers:
+	         ```sh
+                 docker images
+		 docker ps -a
+		 docker stop < container id >
+	         docker rm  < container id >
+	         docker rmi < image1 name > < image2 name >
+	         ```
+		 Now if we edit the index.js file in my hello world project, and then commit and push my changes, a new build will be triggered, but it'll fail because it cannot create a container on Ansible host with the same name as the existing container.  <br/>
+		 To resolve this, we'll need to remove the container before creating a new one. So we'll need to modify the Ansible playbook to do this. <br/>
+		 Add these tasks before the "build docker image" taks in the ansible playbook:
+		 ```sh
+		 - name: stop current running container
+		   command: docker stop simple-devops-container
+		   # if the container does not exist or is in stopped state, by adding the line below, it'll not throw an error:
+		   ignore_errors: yes
+		 - name: remove stopped container
+		   command: docker rm simple-devops-container
+		   ignore_errors: yes
+		 - name: remove docker image
+		   command: docker rmi simple-devops-image
+		   ignore_errors: yes
+		   ```
+            Save and run the job now.
