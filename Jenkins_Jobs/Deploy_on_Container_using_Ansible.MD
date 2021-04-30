@@ -119,13 +119,14 @@ Enable connection between Ansible-control-node and Jenkins
                 ansible-playbook -i /opt/docker/hosts /opt/docker/create-docker-image.yml;
                 ```
 	       - Remove exisiting images and containers:
-	         ```sh
+	         ```
                  docker images
 		 docker ps -a
 		 docker stop < container id >
 	         docker rm  < container id >
 	         docker rmi < image1 name > < image2 name >
 	         ```
+		 
 		 Now if we edit the index.js file in my hello world project, and then commit and push my changes, a new build will be triggered, but it'll fail because it cannot create a container on Ansible host with the same name as the existing container.  <br/>
 		 To resolve this, we'll need to remove the container before creating a new one. So we'll need to modify the Ansible playbook to do this. <br/>
 		 Add these tasks before the "build docker image" taks in the ansible playbook:
