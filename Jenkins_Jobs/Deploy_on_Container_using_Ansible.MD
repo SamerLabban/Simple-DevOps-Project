@@ -116,7 +116,7 @@ Enable connection between Ansible-control-node and Jenkins
 	       - After creating this job and before adding exec command, you can build the job and see if it is copying the artifacts to docker directory on ansible host.
 	       - Exec command: 
                 ```sh 
-                ansible-playbook -i /opt/docker/hosts /opt/docker/create-docker-image.yml;
+                ansible-playbook -i /opt/docker/hosts /opt/docker/create-docker-project.yml;
                 ```
 	       - Remove exisiting images and containers: <br/>
                    docker images   <br/>
@@ -127,7 +127,7 @@ Enable connection between Ansible-control-node and Jenkins
 		 
 		 Now if we edit the index.js file in my hello world project, and then commit and push my changes, a new build will be triggered, but it'll fail because it cannot create a container on Ansible host with the same name as the existing container.  <br/>
 		 To resolve this, we'll need to remove the container before creating a new one. So we'll need to modify the Ansible playbook to do this. <br/>
-		 Add these tasks before the "build docker image" taks in the ansible playbook:
+		 Add these tasks before the "build docker image" tasks in the ansible playbook:
 		 ```sh
 		 - name: stop current running container
 		   command: docker stop simple-devops-container
