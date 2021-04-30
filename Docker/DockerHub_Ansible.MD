@@ -72,4 +72,16 @@ So after running the playbook, you'll see that it creates an image from war file
 
 ## Trigger Above playbooks from Jenkins
 
-First modify hosts file on ansible host to include both "localhost" and private ip address of docker host. Both will be our targets.
+- First modify hosts file on ansible host to include both "localhost" and private ip address of docker host. Both will be our targets.
+- On target host (docker host):
+  ```sh
+  # Switch to ansadmin to run operations as that user
+  su - ansadmin
+  # check if ansadmin is part of docker group
+  id
+  # Add ansadmin to docker group
+  exit  # to go back to root user
+  usermod -aG docker ansadmin
+  su - ansadmin
+  id
+  ```
