@@ -85,3 +85,7 @@ So after running the playbook, you'll see that it creates an image from war file
   su - ansadmin
   id
   ```
+- You can limit ansible playbook to run on a specific host, rather than running on all hosts in hosts file. To do that, use the "--limit" option, example: <br/>
+ansible-playbook -i hosts create-simple-devops-image.yml --limit localhost  <br/>
+You can also restrict to run on a different target host: <br/>
+ansible-playbook -i hosts create-simple-devops-image.yml --limit <private_ip_addr_of_target_host>
