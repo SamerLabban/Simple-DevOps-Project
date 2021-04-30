@@ -89,3 +89,11 @@ So after running the playbook, you'll see that it creates an image from war file
 ansible-playbook -i hosts create-simple-devops-image.yml --limit localhost  <br/>
 You can also restrict to run on a different target host: <br/>
 ansible-playbook -i hosts create-simple-devops-image.yml --limit <private_ip_addr_of_target_host>
+
+- Create Jenkins Job similar to job "Deploy_on_Container_using_ansible". In the execution step of post build action, trigger the above 2 playbooks:
+  ```sh
+  # Create image on Ansible host
+  ansible-playbook -i hosts create-simple-devops-image.yml --limit localhost
+  # Deploy image on docker host
+  ansible-playbook -i hosts create-simple-devops-project.yml --limit <private_ip_addr_of_target_host>
+  ```
