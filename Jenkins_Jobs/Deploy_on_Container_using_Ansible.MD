@@ -140,5 +140,5 @@ Enable connection between Ansible-control-node and Jenkins
 		 - name: remove docker image
 		   command: docker rmi simple-devops-image
 		   ignore_errors: yes
-		   ```
+		 ```
             Save and run the job now.
