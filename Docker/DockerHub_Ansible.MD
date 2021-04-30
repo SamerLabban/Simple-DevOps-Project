@@ -97,3 +97,4 @@ ansible-playbook -i hosts create-simple-devops-image.yml --limit <private_ip_add
   # Deploy image on docker host
   ansible-playbook -i hosts create-simple-devops-project.yml --limit <private_ip_addr_of_target_host>
   ```
+  Note: Ansible playbooks and hosts file should be created on Ansible host at location /opt/docker
