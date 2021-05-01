@@ -15,7 +15,8 @@
     curl https://s3.amazonaws.com/aws-cli/awscli-bundle.zip -o awscli-bundle.zip
     apt install unzip python
     unzip awscli-bundle.zip
-    #sudo apt-get install unzip - if you dont have unzip in your system    
+    #sudo apt-get install unzip - if you dont have unzip in your system
+    # run the command below to copy our files under /usr/local/bin
     ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
     ```
     Note: <br/>
@@ -26,7 +27,9 @@
     If Python 3 has been installed, run these commands: whereis python3  <br/>
     Then we create a symlink to it: sudo ln -s /usr/bin/python3 /usr/bin/python   <br/>
     apt-get update  <br/>
-    apt-get install python3-venv   <br/>
+    apt-get install python3-venv
+    
+    To confirm awscli has been installed, run the command: aws --version 
 
 1. Install kubectl on ubuntu instance
    ```sh
