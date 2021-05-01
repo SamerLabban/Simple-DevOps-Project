@@ -1,9 +1,13 @@
 # Setup Kubernetes (K8s) Cluster on AWS
 
 
-1. Create Ubuntu EC2 instance
+1. Create Ubuntu EC2 instance <br/>
    Add tag: Name: K8s-management-server  <br/>
    When SSH'ing to the AWS instance from putty or mobaxterm, use username "ubuntu" since we are using ubuntu system.  <br/>
+   Select existing secruity group created with the following rules: <br/>
+   Custom TCP Rule  TCP   8080  0.0.0.0/0   <br/>
+   Custom TCP Rule  TCP   8080  ::/0   <br/>
+   SSH              TCP   22    0.0.0.0/0   <br/>
    After you SSH, impersonnate as root "sudo su -" and run the commands below.
    
 1. install AWSCLI
