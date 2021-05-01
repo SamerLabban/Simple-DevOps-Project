@@ -2,6 +2,10 @@
 
 
 1. Create Ubuntu EC2 instance
+   Add tag: Name: K8s-management-server  <br/>
+   When SSH'ing to the AWS instance from putty or mobaxterm, use username "ubuntu" since we are using ubuntu system.  <br/>
+   After you SSH, impersonnate as root "sudo su -" and run the commands below.
+   
 1. install AWSCLI
    ```sh
     curl https://s3.amazonaws.com/aws-cli/awscli-bundle.zip -o awscli-bundle.zip
