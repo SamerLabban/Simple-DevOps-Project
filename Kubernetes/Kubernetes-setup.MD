@@ -77,7 +77,7 @@
    ON AWS go to Services --> Routeh53 (it is under netwroking) --> hosted zones --> created hosted zone  (click on Get started now)
    Domain Name: valaxy.net
    Type: Private hosted zone for Amazon VPC. Make sure you are chosing right VPC if you have multiple
-   VPC ID: choose the region we are using which is ca-central-1 
+   VPC ID: choose the region we are using which is ca-central-1 (you can see the region on AWS console, top-right corner)
    The click on Create
    ```
 
@@ -89,24 +89,59 @@
    ```
 1. Expose environment variable:
    ```sh
+    # We need to export the variable so that kps can use it.
+    # Run the command below from the CLI:
     export KOPS_STATE_STORE=s3://demo.k8s.valaxy.net
    ```
 
 1. Create sshkeys before creating cluster
    ```sh
+   # This key pair is needed to login to our kubernetes cluster.
+   # From CLI run the command below:
     ssh-keygen
+    # The key is generated under .ssh directory:
+    cd .ssh/
+    ls -l
+    # You'll see key files: "id_rsa" and "id_rsa.pub"
    ```
 
 1. Create kubernetes cluster definitions on S3 bucket
    ```sh
-   kops create cluster --cloud=aws --zones=ap-south-1b --name=demo.k8s.valaxy.net --dns-zone=valaxy.net --dns private 
+   kops create cluster --cloud=aws --zones=ca-central-1 --name=demo.k8s.valaxy.net --dns-zone=valaxy.net --dns private 
+   # --name is the name of our cluser. We'll give it the same name as the name of the bucket we created.
+   # Note: we do not store our devops environemnt and target environment in same VPCs, due to security reasons. So if you see once the cluser is created, in the config (output on the screen), it'll setup a new cliuster. 
     ```
 
+1. Commands
+   ```sh
+   To list clusters: kops get cluster
+   To edit this cluster: kops edit cluster demo.k8s.valaxy.net
+   To edit your node instance group: kops edit ig --name=demo.k8s.valaxy.net nodes
+   To edit your master instance group: kops edit ig --name=demo.k8s.valaxy.net master-ca-central-1b
+   ```
+   
 1. Create kubernetes cluser
     ```sh
     kops update cluster demo.k8s.valaxy.net --yes
     ```
-1. To cahnge the kubernetes master and worker instance sizes 
+    Once the cluster is created, you can see in the AWS console: new files get created under the S3 bucket, <br/>
+    2 new IAM roles get created: "masters.demo.k8s.valaxy.net" and "nodes.demo.k8s.valaxy.net"  <br/>
+    Additional routes get created under Route53 <br/>
+    If you got to EC2 Instances: you see 2 new node.demo instances got created and 1 master instance  <br/>
+    Autoscaling: Launch Configuration --> you'll notice 2 new configurations created (nodes and master), this is in case if any system goes down, it'll spin up a new one automatically. <br/>
+    Autoscaling: Autoscaling --> autoscaling group also gets created.
+
+1. Commands
+   ```sh
+   Validate cluster: kops validate cluster   --> this command will fail until the cluster is created (it takes 5-10 min for it to be created)
+   List nodes: kubectl get nodes --show-labels
+   SSH to the master: ssh -i ~/.ssh/id_rsa admin@api.demo.k8s.valaxy.net
+   This "api.demo.k8s.valaxy.net" is our DNS name. We can also use instead the public ip of our master server (under EC2 instances, check the public of the master instance created. ALways login as admin user, never login as root user.
+   You can manage your cluster from the CLI because it is an ubuntu system and we installed kubctl commands. On CLI type "kubctl" to see the list of commands.
+   ```
+   Rather than managing our system from the ubuntu system we created "k8s-management-server", we'll connect to the master EC2 instance, but we'll need to install kubctl on that instance aswell.
+   
+1. To change the kubernetes master and worker instance sizes 
    ```sh 
    kops edit ig --name=<cluster_name> nodes
    #kops edit ig --name=demo.k8s.valaxy.net nodes 
@@ -126,7 +161,6 @@
    ```sh
    kubectl get nodes
    ```
-
 
    
 #### Deploying Nginx pods on Kubernetes
