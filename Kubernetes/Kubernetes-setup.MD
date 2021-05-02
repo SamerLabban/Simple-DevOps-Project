@@ -108,28 +108,28 @@
 
 1. Create kubernetes cluster definitions on S3 bucket
    ```sh
-   kops create cluster --cloud=aws --zones=ca-central-1 --name=demo.k8s.valaxy.net --dns-zone=valaxy.net --dns private 
-   # --name is the name of our cluser. We'll give it the same name as the name of the bucket we created.
-   # Note: we do not store our devops environemnt and target environment in same VPCs, due to security reasons. So if you see once the cluser is created, in the config (output on the screen), it'll setup a new cliuster. 
+   kops create cluster --cloud=aws --zones=ca-central-1a --name=demo.k8s.valaxy.net --dns-zone=valaxy.net --dns private 
+   # --name is the name of our cluster. We'll give it the same name as the name of the bucket we created. You can see the availability zone, by selecting an EC2 instance --> Networking --> Availibility Zone
+   # --zones is different from region. Forexample, we have region as "ca-central-1", and this has 2 availability zones "ca-central-1a" and "ca-central-1b".  
+   # Note: we do not store our devops environment and target environment in same VPCs, due to security reasons. So if you see once the cluser is created, in the config (output on the screen), it'll setup a new cliuster. 
     ```
 
 1. Commands
    ```sh
    To list clusters: kops get cluster
-   To edit this cluster: kops edit cluster demo.k8s.valaxy.net
-   To edit your node instance group: kops edit ig --name=demo.k8s.valaxy.net nodes
-   To edit your master instance group: kops edit ig --name=demo.k8s.valaxy.net master-ca-central-1b
+   To edit this cluster: kops edit cluster demo.samere.k8s.valaxy.net
+   To edit your node instance group: kops edit ig --name=demo.samere.k8s.valaxy.net nodes
+   To edit your master instance group: kops edit ig --name=demo.samere.k8s.valaxy.net master-ca-central-1a
    ```
    
 1. Create kubernetes cluser
     ```sh
-    kops update cluster demo.k8s.valaxy.net --yes
+    kops update cluster demo.samere.k8s.valaxy.net --yes
     ```
     Once the cluster is created, you can see in the AWS console: new files get created under the S3 bucket, <br/>
     2 new IAM roles get created: "masters.demo.k8s.valaxy.net" and "nodes.demo.k8s.valaxy.net"  <br/>
     Additional routes get created under Route53 <br/>
-    If you got to EC2 Instances: you see 2 new node.demo instances got created and 1 master instance  <br/>
-    Autoscaling: Launch Configuration --> you'll notice 2 new configurations created (nodes and master), this is in case if any system goes down, it'll spin up a new one automatically. <br/>
+    If you go to EC2 Instances: you see 2 new node.demo instances got created and 1 master instance  <br/>
     Autoscaling: Autoscaling --> autoscaling group also gets created.
 
 1. Commands
