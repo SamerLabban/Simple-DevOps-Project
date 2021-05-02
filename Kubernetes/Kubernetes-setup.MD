@@ -2,7 +2,7 @@
 
 
 1. Create Ubuntu EC2 instance <br/>
-   Add tag: Name: K8s-management-server  <br/>
+   Add tag: Name: k8s-management-server  <br/>
    When SSH'ing to the AWS instance from putty or mobaxterm, use username "ubuntu" since we are using ubuntu system.  <br/>
    Select existing secruity group created with the following rules: <br/>
    Custom TCP Rule  TCP   8080  0.0.0.0/0   <br/>
@@ -50,23 +50,42 @@
 
     ```
 1. Create an IAM user/role  with Route53, EC2, IAM and S3 full access
+   Services --> IAM --> Roles --> Create Role --> EC2 --> search for and add these 4 policies: EC2Fullaccess, S3FullAccess, Route53FullAccess, and IAMFull Access. <br/>
+   Add tags:  <br/>
+      Key: Name   <br/>
+      Value: k8-role   <br/>
+   Next  <br/>
+   Role name: k8s-role  <br/>
+   Create role.
+
+   Go to your kubernetes EC2 instance, to attach the role to EC3 instance: <br/>
+   EC2 Instance --> k8s-management-server (created kubernetes EC2 instance) --> select the instance --> Actions --> Instance Settings --> Attach/Replace IAM Role --> IAM role: choose the created kubernetes role (k8s-role) --> Apply <br/>
 
 1. Attach IAM role to ubuntu instance
    ```sh
    # Note: If you create IAM user with programmatic access then provide Access keys. Otherwise region information is enough
    aws configure
+   # AWS Access Key ID: In our case no need to provide "Access Key" since we have attached code
+   # AWS Seceret Access Key: We do not need also secret access code.
+   # Default region name: ca-central-1  (this is central canada region)
+   # Default output format: keep it as it is. By default it is JSON.
     ```
+    So we have setup our ubuntu system to create kubernetes cluster on our AWS account.
 
 1. Create a Route53 private hosted zone (you can create Public hosted zone if you have a domain)
    ```sh
-   Routeh53 --> hosted zones --> created hosted zone  
+   ON AWS go to Services --> Routeh53 (it is under netwroking) --> hosted zones --> created hosted zone  (click on Get started now)
    Domain Name: valaxy.net
    Type: Private hosted zone for Amazon VPC. Make sure you are chosing right VPC if you have multiple
+   VPC ID: choose the region we are using which is ca-central-1 
+   The click on Create
    ```
 
 1. create an S3 bucket
    ```sh
+    # On AWS go to Services --> S3  (present under Storage) --> Create bucket, or instead of creating the bucket from AWS you can create it from the CLI using the command below:
     aws s3 mb s3://demo.k8s.valaxy.net
+    # If you refresh your AWS console, you'll see the s3 bucket created.
    ```
 1. Expose environment variable:
    ```sh
