@@ -75,7 +75,7 @@
 
 1. Create a Route53 private hosted zone (you can create Public hosted zone if you have a domain)
    ```sh
-   ON AWS go to Services --> Routeh53 (it is under netwroking) --> hosted zones --> created hosted zone  (click on Get started now)
+   On AWS console go to Services --> Route53 (it is under netwroking) --> hosted zones --> created hosted zone  (click on Get started now)
    Domain Name: valaxy.net
    Type: Private hosted zone for Amazon VPC. Make sure you are chosing right VPC if you have multiple
    VPC ID: choose the region we are using which is ca-central-1 (you can see the region on AWS console, top-right corner)
