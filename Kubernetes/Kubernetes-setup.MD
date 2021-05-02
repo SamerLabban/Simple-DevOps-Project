@@ -61,6 +61,7 @@
 
    Go to your kubernetes EC2 instance, to attach the role to EC3 instance: <br/>
    EC2 Instance --> k8s-management-server (created kubernetes EC2 instance) --> select the instance --> Actions --> Instance Settings --> Attach/Replace IAM Role --> IAM role: choose the created kubernetes role (k8s-role) --> Apply <br/>
+   If IAM Role attachment, is not present under "Instance Settigs", it will be under Security --> Modify IAM Role
 
 1. Attach IAM role to ubuntu instance
    ```sh
