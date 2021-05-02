@@ -49,7 +49,8 @@
     # curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
 
     ```
-1. Create an IAM user/role  with Route53, EC2, IAM and S3 full access
+1. Create an IAM user/role  with Route53, EC2, IAM and S3 full access <br/>
+   EC2 IAM role: Allows EC2 instances to call AWS services on your behalf. <br/>
    Services --> IAM --> Roles --> Create Role --> EC2 --> search for and add these 4 policies: EC2Fullaccess, S3FullAccess, Route53FullAccess, and IAMFull Access. <br/>
    Add tags:  <br/>
       Key: Name   <br/>
