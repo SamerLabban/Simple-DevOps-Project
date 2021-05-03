@@ -139,7 +139,7 @@
    Validate cluster: kops validate cluster   --> this command will fail until the cluster is created (it takes 5-10 min for it to be created)
    List nodes: kubectl get nodes --show-labels
    SSH to the master: ssh -i ~/.ssh/id_rsa admin@api.demo.k8s.valaxy.net
-   This "api.demo.k8s.valaxy.net" is our DNS name. We can also use instead the public ip of our master server (under EC2 instances, check the public of the master instance created. ALways login as admin user, never login as root user.
+   This "api.demo.k8s.valaxy.net" is our DNS name. We can also use instead the public ip of our master server (under EC2 instances, check the public of the master instance created. Always login as admin user (admin@api.demo.k8s.valaxy.net), never login as root user. Before you SSH impersonate on ansible host as root (sudo su -))
    You can manage your cluster from the CLI because it is an ubuntu system and we installed kubctl commands. On CLI type "kubctl" to see the list of commands.
    ```
    Rather than managing our system from the ubuntu system we created "k8s-management-server", we'll connect to the master EC2 instance, but we'll need to install kubctl on that instance aswell.
