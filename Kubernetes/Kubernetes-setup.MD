@@ -73,8 +73,9 @@
     ```
     So we have setup our ubuntu system to create kubernetes cluster on our AWS account.
 
-1. Create a Route53 private hosted zone (you can create Public hosted zone if you have a domain)
-   ```sh
+1. Create a Route53 private hosted zone (you can create Public hosted zone if you have a domain) <br/>
+   A hosted zone is a container that holds information about how you want to route traffic for a domain, such as example.com, and its subdomains.  <br/>
+  ```sh
    On AWS console go to Services --> Route53 (it is under netwroking) --> hosted zones --> created hosted zone  (click on Get started now)
    Domain Name: valaxy.net
    Type: Private hosted zone for Amazon VPC. Make sure you are chosing right VPC if you have multiple
@@ -82,7 +83,8 @@
    The click on Create
    ```
 
-1. create an S3 bucket
+1. create an S3 bucket  <br/>
+   Buckets are containers for data stored in S3.  <br/>
    ```sh
     # On AWS go to Services --> S3  (present under Storage) --> Create bucket, or instead of creating the bucket from AWS you can create it from the CLI using the command below:
     aws s3 mb s3://demo.k8s.valaxy.net
@@ -109,8 +111,8 @@
 1. Create kubernetes cluster definitions on S3 bucket
    ```sh
    kops create cluster --cloud=aws --zones=ca-central-1a --name=demo.k8s.valaxy.net --dns-zone=valaxy.net --dns private 
-   # --name is the name of our cluster. We'll give it the same name as the name of the bucket we created. You can see the availability zone, by selecting an EC2 instance --> Networking --> Availibility Zone
-   # --zones is different from region. Forexample, we have region as "ca-central-1", and this has 2 availability zones "ca-central-1a" and "ca-central-1b".  
+   # --name is the name of our cluster. We'll give it the same name as the name of the bucket we created. If name exists, use a different unique name.
+   # --zones is different from region. Forexample, we have region as "ca-central-1", and this has 2 availability zones "ca-central-1a" and "ca-central-1b". You can see the availability zone, by selecting an EC2 instance --> Networking --> Availibility Zone 
    # Note: we do not store our devops environment and target environment in same VPCs, due to security reasons. So if you see once the cluser is created, in the config (output on the screen), it'll setup a new cliuster. 
     ```
 
@@ -124,7 +126,7 @@
    
 1. Create kubernetes cluser
     ```sh
-    kops update cluster demo.samere.k8s.valaxy.net --yes
+    kops update cluster demo.k8s.valaxy.net --yes
     ```
     Once the cluster is created, you can see in the AWS console: new files get created under the S3 bucket, <br/>
     2 new IAM roles get created: "masters.demo.k8s.valaxy.net" and "nodes.demo.k8s.valaxy.net"  <br/>
