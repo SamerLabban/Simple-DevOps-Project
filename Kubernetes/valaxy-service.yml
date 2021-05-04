@@ -11,4 +11,4 @@ spec:
   ports:
     - port: 8080 # this port is at pod level
       targetPort: 8080 # this ports is at kubernetes cluster level
-      nodePort: 31200 # this port is for external access
+      nodePort: 31200 # this port is for external access. The port should be exposed in AWS securtiy role associated with master instance.
