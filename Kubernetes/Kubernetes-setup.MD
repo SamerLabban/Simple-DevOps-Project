@@ -191,10 +191,12 @@
     # kubectl run simple-devops-project --image=yankils/simple-devops-image --replicas=2 --port=8080
     kubectl get pods
     kubectl get deployments
-   ```
-   So far our application is accessible internally: wget <internal IP>:80   <br/>
-   Port 80 is the default port, so even if you do not specify it, you can still access your application: wget <internal IP>  <br/>
-   The index.html file should be accessible from the browser now. (if you do "ls" you see the index.html we deployed before.)
+    # So far our application is accessible internally: 
+    wget <internal IP>:80
+    # Port 80 is the default port, so even if you do not specify it, you can still access your application: 
+    wget <internal IP>
+    # The index.html file should be accessible from the browser now. (if you do "ls" you see the index.html we deployed before.)
+    ```
 
 1. Expose the deployment as service. This will create an ELB in front of those 2 containers and allow us to publicly access them.
    ```sh
