@@ -185,18 +185,29 @@
     # "sample-nginx" is the deployment name.
     # The image is pulled from docker hub.
     # "replicas" are specifies how many pods do you need. If nothing is specified, it'll create 1 pod. Better to have replicas so that your application is highly available, if 1 replica goes down.
-    # "port": ngnix runs on port 80
+    # "port": ngnix runs on port 80. This is the port we are exposing to the external network.
     #kubectl run sample-nginx --image=nginx --replicas=2 --port=80
     # kubectl run simple-devops-project --image=yankils/simple-devops-image --replicas=2 --port=8080
     kubectl get pods
     kubectl get deployments
    ```
    So far our application is accessible internally: wget <internal IP>:80   <br/>
-   Port 80 is the default port, so even if you do not specify it, you can still access your application: wget <internal IP>
+   Port 80 is the default port, so even if you do not specify it, you can still access your application: wget <internal IP>  <br/>
+   The index.html file should be accessible from the browser now. (if you do "ls" you see the index.html we deployed before.)
 
 1. Expose the deployment as service. This will create an ELB in front of those 2 containers and allow us to publicly access them.
    ```sh
    kubectl expose deployment sample-nginx --port=80 --type=LoadBalancer
+   # "LoadBalancer" is the service type. We have different types of services, depending on the use case you can choose the right one.
    # kubectl expose deployment simple-devops-project --port=8080 --type=LoadBalancer
    kubectl get services -o wide
+   # By running above command , you'll see the LoadBalancer service we created. (You'll not get an External IP, you'll see it "pending"). Also you'll see a field Ports: 80/30001:TCP --> 80 is the port accessible within the cluster, 30001 is the port used to access the application from outside the cluster, so we'll use port 30001 from the browser <master_server_ip>:<port>.
    ```
+   Not you'll need to expose port 30001 used above in the security group used in AWS. So add to the security group the following ruke: <br/>
+   Type: Custom TCP  /  Protocol: TCP / Port range: 30001 / Source: 0.0.0.0/0
+   
+   To delete a pod you do:  kubectl delete pod <pod_id>   <br/>
+   Once you delete the pods, the application won't be accessible, but our deployment detects that the pods are not running and re0-creates new pods. <br/>
+   In real world, we do not create services using commands, but we'll use yaml file that has all the definitions. And whenever there is a new deployment we just need to remove the old containers, and it'll remove the old image and create add the new one.
+   
+   
