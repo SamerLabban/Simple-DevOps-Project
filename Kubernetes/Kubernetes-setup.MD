@@ -167,14 +167,32 @@
 
    
 #### Deploying Nginx pods on Kubernetes
-1. Deploying Nginx Container
-    ```sh
+1. Notes  <br/>
+   SSH to the master: ssh -i ~/.ssh/id_rsa admin@api.demo.k8s.valaxy.net  <br/>
+   Impersonnate as root user: sudo su -  <br/>
+   Run "kubectl" command to confirm that it is working. <br/>
+   kubectl get nodes  --> this will show you the nodes (1 master and 2 client nodes).  <br/>
+   kubectl get pods --> once we create pods, you can see them by running this command.  Once you deploy and run this command, you'll see under "READY" column something like 1/1 --> the first "1" is for pods and the second "1" is for containers. Pods and containers are different. Within a pod our containers run. <br/>
+   kubectl get nodes -o wide --> this gives more detauils about the pods, like the internal IP used to access the application, and the node IPs (each pod is created a different node to make it highly available). <br/>
+   kubectl get deploy  or kubectl get deployments --> this will show you deployments done.   <br/>
+   kubectl get service --> you'll see services there once created. "kubrnetes" service you see is by default created with the cluster. <br/>
+   We will create a deployment, and whenever we create a deploy, in the background it'll create pods. Deploy is going to create replica set and the replica set are going to make sure your pods are always available. <br/>
+   The application can be accessible only by creating a service. Service is needed to expose the application to the outside.
+   
+1. Deploying Nginx Container   
+   ```sh
     kubectl run --generator=run-pod/v1 sample-nginx --image=nginx --replicas=2 --port=80
+    # "sample-nginx" is the deployment name.
+    # The image is pulled from docker hub.
+    # "replicas" are specifies how many pods do you need. If nothing is specified, it'll create 1 pod. Better to have replicas so that your application is highly available, if 1 replica goes down.
+    # "port": ngnix runs on port 80
     #kubectl run sample-nginx --image=nginx --replicas=2 --port=80
     # kubectl run simple-devops-project --image=yankils/simple-devops-image --replicas=2 --port=8080
     kubectl get pods
     kubectl get deployments
    ```
+   So far our application is accessible internally: wget <internal IP>:80   <br/>
+   Port 80 is the default port, so even if you do not specify it, you can still access your application: wget <internal IP>
 
 1. Expose the deployment as service. This will create an ELB in front of those 2 containers and allow us to publicly access them.
    ```sh
