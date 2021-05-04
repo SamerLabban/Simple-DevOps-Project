@@ -172,6 +172,7 @@
    Impersonnate as root user: sudo su -  <br/>
    Run "kubectl" command to confirm that it is working. <br/>
    kubectl get nodes  --> this will show you the nodes (1 master and 2 client nodes).  <br/>
+   If you get an error running the above command, saying "connection to the server localhost:8080 was refused - did you specify the right host or port?", then on the local host delete and rectreate the file .ssh/known_hosts, and add into it localhost   <br/>
    kubectl get pods --> once we create pods, you can see them by running this command.  Once you deploy and run this command, you'll see under "READY" column something like 1/1 --> the first "1" is for pods and the second "1" is for containers. Pods and containers are different. Within a pod our containers run. <br/>
    kubectl get nodes -o wide --> this gives more detauils about the pods, like the internal IP used to access the application, and the node IPs (each pod is created a different node to make it highly available). <br/>
    kubectl get deploy  or kubectl get deployments --> this will show you deployments done.   <br/>
