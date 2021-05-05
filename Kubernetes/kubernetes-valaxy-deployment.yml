@@ -1,8 +1,10 @@
 ---
 - name: Create pods using deployment 
   hosts: kubernetes 
+  # the playbook will run on ips under "kubernetes" group in the hosts file  
   # become: true
   user: ubuntu
+  # if we do not specify root user above, it will login as ansadmin user (this user is not present on our master host)
  
   tasks: 
   - name: create a deployment
