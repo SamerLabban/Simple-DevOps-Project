@@ -56,11 +56,34 @@
     
 1.  Check for pods, deployments and services on kubernetes master
     ```sh 
+    # On ansible host run the following
     kubectl get pods -o wide 
     kubectl get deploy -o wide
     kubectl get service -o wide
+    # "-o wide" is optional"
+    # To delete a deployment you do:
+    kubectl delete deployment <deployment name>
+    # Ex: kubectl delete deployment valaxy-deployment
+    # Whenever you delete a deployment, it deletes the pods as well.
+    # To delete a service, you do:
+    kubestl delete service <service name>
+    # Ex: kubectl delete service valaxy-service    
     ```
 	
+1.  Deploy Ansible Playbook <br/>
+    ```sh
+    # On ansible host run the following
+    # Whenever I run my playbook, it should create the deployment then it should create the service.
+    cd /opt/kubernetes
+    ansible-playbook -i hosts kubernetes-valaxy-deployment.yml
+    # In hosts file we specified that it runs only on kebrnetes master hodst.
+    # To create our service:
+    ansible-playbook -i hosts kubernetes-valaxy-service.yml
+    # if you do: kubestl get service --> you'll see on which port the service is running. We hard-coded it to run on port 31200.
+    # So on the browser we can access our application on: <master_node_dns_name_or ip>:31200/webapp
+    ```
+    We need ansible to run the deployment and services, to provide authentication to the cluster from Jenkins. We cannot run the kubernetes files directly. Also if any pre-requisits are needed, such as image creation, we need ansible to do that.
+
 1. Access application suing service IP
    ```sh
    wget <kubernetes-Master-IP>:31200
