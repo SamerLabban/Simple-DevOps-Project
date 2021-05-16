@@ -82,8 +82,8 @@
    VPC ID: choose the region we are using which is ca-central-1 (you can see the region on AWS console, top-right corner)
    The click on Create
    ```
-
-1. create an S3 bucket  <br/>
+   
+1. Create an S3 bucket  <br/>
    Buckets are containers for data stored in S3.  <br/>
    ```sh
     # On AWS go to Services --> S3  (present under Storage) --> Create bucket, or instead of creating the bucket from AWS you can create it from the CLI using the command below:
