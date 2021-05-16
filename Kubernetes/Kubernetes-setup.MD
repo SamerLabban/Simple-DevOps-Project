@@ -97,31 +97,31 @@
    ```
 
 10. Create sshkeys before creating cluster
-   ```sh
-   # This key pair is needed to login to our kubernetes cluster.
-   # From CLI run the command below:
-   ssh-keygen
-   # The key is generated under .ssh directory:
-   cd .ssh/
-   ls -l
-   # You'll see key files: "id_rsa" and "id_rsa.pub"
-   ```
-
-11. Create kubernetes cluster definitions on S3 bucket
-   ```sh
-   kops create cluster --cloud=aws --zones=ca-central-1a --name=demo.k8s.valaxy.net --dns-zone=valaxy.net --dns private 
-   # --name is the name of our cluster. We'll give it the same name as the name of the bucket we created. If name exists, use a different unique name.
-   # --zones is different from region. Forexample, we have region as "ca-central-1", and this has 2 availability zones "ca-central-1a" and "ca-central-1b". You can see the availability zone, by selecting an EC2 instance --> Networking --> Availibility Zone 
-   # Note: we do not store our devops environment and target environment in same VPCs, due to security reasons. So if you see once the cluser is created, in the config (output on the screen), it'll setup a new cliuster. 
+    ```sh
+    # This key pair is needed to login to our kubernetes cluster.
+    # From CLI run the command below:
+    ssh-keygen
+    # The key is generated under .ssh directory:
+    cd .ssh/
+    ls -l
+    # You'll see key files: "id_rsa" and "id_rsa.pub"
     ```
 
+11. Create kubernetes cluster definitions on S3 bucket
+    ```sh
+    kops create cluster --cloud=aws --zones=ca-central-1a --name=demo.k8s.valaxy.net --dns-zone=valaxy.net --dns private 
+    # --name is the name of our cluster. We'll give it the same name as the name of the bucket we created. If name exists, use a different unique name.
+    # --zones is different from region. Forexample, we have region as "ca-central-1", and this has 2 availability zones "ca-central-1a" and "ca-central-1b". You can see the availability zone, by selecting an EC2 instance --> Networking --> Availibility Zone 
+    # Note: we do not store our devops environment and target environment in same VPCs, due to security reasons. So if you see once the cluser is created, in the config (output on the screen), it'll setup a new cliuster. 
+     ```
+
 12. Commands
-   ```sh
-   To list clusters: kops get cluster
-   To edit this cluster: kops edit cluster demo.samere.k8s.valaxy.net
-   To edit your node instance group: kops edit ig --name=demo.samere.k8s.valaxy.net nodes
-   To edit your master instance group: kops edit ig --name=demo.samere.k8s.valaxy.net master-ca-central-1a
-   ```
+    ```sh
+    To list clusters: kops get cluster
+    To edit this cluster: kops edit cluster demo.samere.k8s.valaxy.net
+    To edit your node instance group: kops edit ig --name=demo.samere.k8s.valaxy.net nodes
+    To edit your master instance group: kops edit ig --name=demo.samere.k8s.valaxy.net master-ca-central-1a
+    ```
    
 13. Create kubernetes cluser
     ```sh
@@ -134,37 +134,37 @@
     Autoscaling: Autoscaling --> autoscaling group also gets created.
 
 14. Commands
-   ```sh
-   Validate cluster: kops validate cluster   --> this command will fail until the cluster is created (it takes 5-10 min for it to be created)
-   List nodes: kubectl get nodes --show-labels
-   SSH to the master: ssh -i ~/.ssh/id_rsa admin@api.demo.k8s.valaxy.net
-   This "api.demo.k8s.valaxy.net" is our DNS name. We can also use instead the public ip of our master server (under EC2 instances, check the public of the master instance created. Always login as admin user (admin@api.demo.k8s.valaxy.net), never login as root user. Before you SSH impersonate on ansible host as root (sudo su -))
-   You can manage your cluster from the CLI because it is an ubuntu system and we installed kubctl commands. On CLI type "kubctl" to see the list of commands.
-   ```
-   Rather than managing our system from the ubuntu system we created "k8s-management-server", we'll connect to the master EC2 instance, but we'll need to install kubctl on that instance aswell.
+    ```sh
+    Validate cluster: kops validate cluster   --> this command will fail until the cluster is created (it takes 5-10 min for it to be created)
+    List nodes: kubectl get nodes --show-labels
+    SSH to the master: ssh -i ~/.ssh/id_rsa admin@api.demo.k8s.valaxy.net
+    This "api.demo.k8s.valaxy.net" is our DNS name. We can also use instead the public ip of our master server (under EC2 instances, check the public of the master instance created. Always login as admin user (admin@api.demo.k8s.valaxy.net), never login as root user. Before you SSH impersonate on ansible host as root (sudo su -))
+    You can manage your cluster from the CLI because it is an ubuntu system and we installed kubctl commands. On CLI type "kubctl" to see the list of commands.
+    ```
+    Rather than managing our system from the ubuntu system we created "k8s-management-server", we'll connect to the master EC2 instance, but we'll need to install kubctl on that instance aswell.
    
 15. To change the kubernetes master and worker instance sizes 
-   ```sh 
-   kops edit ig --name=<cluster_name> nodes
-   #kops edit ig --name=demo.k8s.valaxy.net nodes 
-   kops edit ig --name=<cluster_name> master-<zone_name>
-   #kops edit ig --name=demo.k8s.valaxy.net master-ap-south-1b
-   ```
+    ```sh 
+    kops edit ig --name=<cluster_name> nodes
+    #kops edit ig --name=demo.k8s.valaxy.net nodes 
+    kops edit ig --name=<cluster_name> master-<zone_name>
+    #kops edit ig --name=demo.k8s.valaxy.net master-ap-south-1b
+    ```
    
-16. to Delete cluster (try once your lab is done)
-   ```sh 
-   kops delete cluster <cluster_name> --yes
-   ```
+16. To Delete cluster (try once your lab is done)
+    ```sh 
+    kops delete cluster <cluster_name> --yes
+    ```
    
 17. Validate your cluster
-     ```sh
-     kops validate cluster
-     ```
+    ```sh
+    kops validate cluster
+    ```
 
 18. To list nodes
-   ```sh
-   kubectl get nodes
-   ```
+    ```sh
+    kubectl get nodes
+    ```
    
 #### Deploying Nginx pods on Kubernetes
 1. Notes  <br/>
