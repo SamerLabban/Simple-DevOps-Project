@@ -10,7 +10,7 @@
    SSH              TCP   22    0.0.0.0/0   <br/>
    After you SSH, impersonnate as root "sudo su -" and run the commands below.
    
-1. install AWSCLI
+2. install AWSCLI
    ```sh
     curl https://s3.amazonaws.com/aws-cli/awscli-bundle.zip -o awscli-bundle.zip
     apt install unzip python
@@ -31,15 +31,14 @@
     
     To confirm awscli has been installed, run the command: aws --version 
 
-1. Install kubectl on ubuntu instance
-   ```sh
-   
-   curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+3. Install kubectl on ubuntu instance
+   ```sh   
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
     chmod +x ./kubectl
     sudo mv ./kubectl /usr/local/bin/kubectl
    ```
 
-1. Install kops on ubuntu instance
+4. Install kops on ubuntu instance
    ```sh
     curl -LO  https://github.com/kubernetes/kops/releases/download/1.15.0/kops-linux-amd64
     chmod +x kops-linux-amd64
@@ -47,9 +46,9 @@
     kops version (it should be 1.15.0)
     Note: use below command if you wish to use latest version. For now we could see latest version of kops. So ignore it until further update. 
     # curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
-
     ```
-1. Create an IAM user/role  with Route53, EC2, IAM and S3 full access <br/>
+
+5. Create an IAM user/role  with Route53, EC2, IAM and S3 full access <br/>
    EC2 IAM role: Allows EC2 instances to call AWS services on your behalf. <br/>
    Services --> IAM --> Roles --> Create Role --> EC2 --> search for and add these 4 policies: EC2Fullaccess, S3FullAccess, Route53FullAccess, and IAMFull Access. <br/>
    Add tags:  <br/>
@@ -59,7 +58,7 @@
    Role name: k8s-role  <br/>
    Create role.
 
-1. Attach IAM role to ubuntu instance  <br/>
+6. Attach IAM role to ubuntu instance  <br/>
    Go to your kubernetes EC2 instance, to attach the role to EC3 instance: <br/>
    EC2 Instance --> k8s-management-server (created kubernetes EC2 instance) --> select the instance --> Actions --> Instance Settings --> Attach/Replace IAM Role --> IAM role: choose the created kubernetes role (k8s-role) --> Apply <br/>
    If IAM Role attachment, is not present under "Instance Settigs", it will be under Security --> Modify IAM Role
@@ -70,12 +69,12 @@
    # AWS Seceret Access Key: We do not need also secret access code.
    # Default region name: ca-central-1  (this is central canada region)
    # Default output format: keep it as it is. By default it is JSON.
-    ```
-    So we have setup our ubuntu system to create kubernetes cluster on our AWS account.
+   ```
+   So we have setup our ubuntu system to create kubernetes cluster on our AWS account.
 
-1. Create a Route53 private hosted zone (you can create Public hosted zone if you have a domain) <br/>
+7. Create a Route53 private hosted zone (you can create Public hosted zone if you have a domain) <br/>
    A hosted zone is a container that holds information about how you want to route traffic for a domain, such as example.com, and its subdomains.  <br/>
-  ```sh
+   ```sh
    On AWS console go to Services --> Route53 (it is under netwroking) --> hosted zones --> created hosted zone  (click on Get started now)
    Domain Name: valaxy.net
    Type: Private hosted zone for Amazon VPC. Make sure you are chosing right VPC if you have multiple
@@ -83,32 +82,32 @@
    The click on Create
    ```
    
-1. Create an S3 bucket  <br/>
+8. Create an S3 bucket  <br/>
    Buckets are containers for data stored in S3.  <br/>
    ```sh
-    # On AWS go to Services --> S3  (present under Storage) --> Create bucket, or instead of creating the bucket from AWS you can create it from the CLI using the command below:
-    aws s3 mb s3://demo.k8s.valaxy.net
-    # If you refresh your AWS console, you'll see the s3 bucket created.
+   # On AWS go to Services --> S3  (present under Storage) --> Create bucket, or instead of creating the bucket from AWS you can create it from the CLI using the command below:
+   aws s3 mb s3://demo.k8s.valaxy.net
+   # If you refresh your AWS console, you'll see the s3 bucket created.
    ```
-1. Expose environment variable:
+9. Expose environment variable:
    ```sh
     # We need to export the variable so that kps can use it.
     # Run the command below from the CLI:
     export KOPS_STATE_STORE=s3://demo.k8s.valaxy.net
    ```
 
-1. Create sshkeys before creating cluster
+10. Create sshkeys before creating cluster
    ```sh
    # This key pair is needed to login to our kubernetes cluster.
    # From CLI run the command below:
-    ssh-keygen
-    # The key is generated under .ssh directory:
-    cd .ssh/
-    ls -l
-    # You'll see key files: "id_rsa" and "id_rsa.pub"
+   ssh-keygen
+   # The key is generated under .ssh directory:
+   cd .ssh/
+   ls -l
+   # You'll see key files: "id_rsa" and "id_rsa.pub"
    ```
 
-1. Create kubernetes cluster definitions on S3 bucket
+11. Create kubernetes cluster definitions on S3 bucket
    ```sh
    kops create cluster --cloud=aws --zones=ca-central-1a --name=demo.k8s.valaxy.net --dns-zone=valaxy.net --dns private 
    # --name is the name of our cluster. We'll give it the same name as the name of the bucket we created. If name exists, use a different unique name.
@@ -116,7 +115,7 @@
    # Note: we do not store our devops environment and target environment in same VPCs, due to security reasons. So if you see once the cluser is created, in the config (output on the screen), it'll setup a new cliuster. 
     ```
 
-1. Commands
+12. Commands
    ```sh
    To list clusters: kops get cluster
    To edit this cluster: kops edit cluster demo.samere.k8s.valaxy.net
@@ -124,7 +123,7 @@
    To edit your master instance group: kops edit ig --name=demo.samere.k8s.valaxy.net master-ca-central-1a
    ```
    
-1. Create kubernetes cluser
+13. Create kubernetes cluser
     ```sh
     kops update cluster demo.k8s.valaxy.net --yes
     ```
@@ -134,7 +133,7 @@
     If you go to EC2 Instances: you see 2 new node.demo instances got created and 1 master instance  <br/>
     Autoscaling: Autoscaling --> autoscaling group also gets created.
 
-1. Commands
+14. Commands
    ```sh
    Validate cluster: kops validate cluster   --> this command will fail until the cluster is created (it takes 5-10 min for it to be created)
    List nodes: kubectl get nodes --show-labels
@@ -144,27 +143,28 @@
    ```
    Rather than managing our system from the ubuntu system we created "k8s-management-server", we'll connect to the master EC2 instance, but we'll need to install kubctl on that instance aswell.
    
-1. To change the kubernetes master and worker instance sizes 
+15. To change the kubernetes master and worker instance sizes 
    ```sh 
    kops edit ig --name=<cluster_name> nodes
    #kops edit ig --name=demo.k8s.valaxy.net nodes 
    kops edit ig --name=<cluster_name> master-<zone_name>
    #kops edit ig --name=demo.k8s.valaxy.net master-ap-south-1b
    ```
-1. to Delete cluster (try once your lab is done)
+   
+16. to Delete cluster (try once your lab is done)
    ```sh 
    kops delete cluster <cluster_name> --yes
    ```
-1. Validate your cluster
+   
+17. Validate your cluster
      ```sh
-      kops validate cluster
-    ```
+     kops validate cluster
+     ```
 
-1. To list nodes
+18. To list nodes
    ```sh
    kubectl get nodes
    ```
-
    
 #### Deploying Nginx pods on Kubernetes
 1. Notes  <br/>
@@ -172,9 +172,9 @@
    Impersonnate as root user: sudo su -  <br/>
    Run "kubectl" command to confirm that it is working. <br/>
    kubectl get nodes  --> this will show you the nodes (1 master and 2 client nodes).  <br/>
-   If you get an error running the above command, saying "connection to the server localhost:8080 was refused - did you specify the right host or port?", then on the local host delete and rectreate the file .ssh/known_hosts, and add into it localhost   <br/>
+   If you get an error running the above command, saying "connection to the server localhost:8080 was refused - did you specify the right host or port" --> then on the local host delete and rectreate the file .ssh/known_hosts, and add into it localhost   <br/>
    kubectl get pods --> once we create pods, you can see them by running this command.  Once you deploy and run this command, you'll see under "READY" column something like 1/1 --> the first "1" is for pods and the second "1" is for containers. Pods and containers are different. Within a pod our containers run. <br/>
-   kubectl get nodes -o wide --> this gives more detauils about the pods, like the internal IP used to access the application, and the node IPs (each pod is created a different node to make it highly available). <br/>
+   kubectl get nodes -o wide --> this gives more details about the pods, like the internal IP used to access the application, and the node IPs (each pod is created a different node to make it highly available). <br/>
    kubectl get deploy  or kubectl get deployments --> this will show you deployments done.   <br/>
    kubectl get service --> you'll see services there once created. "kubrnetes" service you see is by default created with the cluster. <br/>
    We will create a deployment, and whenever we create a deploy, in the background it'll create pods. Deploy is going to create replica set and the replica set are going to make sure your pods are always available. <br/>
