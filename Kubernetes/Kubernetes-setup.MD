@@ -185,7 +185,7 @@
     kubectl run --generator=run-pod/v1 sample-nginx --image=nginx --replicas=2 --port=80
     # "sample-nginx" is the deployment name.
     # The image is pulled from docker hub.
-    # "replicas" are specifies how many pods do you need. If nothing is specified, it'll create 1 pod. Better to have replicas so that your application is highly available, if 1 replica goes down.
+    # "replicas" specifies how many pods do you need. If nothing is specified, it'll create 1 pod. Better to have replicas so that your application is highly available, if 1 replica goes down.
     # "port": ngnix runs on port 80. This is the port we are exposing to the external network.
     #kubectl run sample-nginx --image=nginx --replicas=2 --port=80
     # kubectl run simple-devops-project --image=yankils/simple-devops-image --replicas=2 --port=8080
