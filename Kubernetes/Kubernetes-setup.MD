@@ -197,18 +197,20 @@
     wget <internal IP>:80
     # Port 80 is the default port, so even if you do not specify it, you can still access your application: 
     wget <internal IP>
-    # After running the wget command, if you do "ls", you'll see index.html file created. If you open the "index.html" file, you'll see the default nginx file.This is the file which we'll access later from the browser.
+    # After running the wget command, if you do "ls", you'll see index.html file created. If you open the "index.html" file, you'll see the default nginx file.
+    # delete the index.html file created when running wget command. Every time you run the wget command, it'll create the index.html file.
+    rm index.html
     ```
 
-1. Expose the deployment as service. This will create an ELB in front of those 2 containers and allow us to publicly access them.
+1. Expose the deployment as service. This will create an ELB in front of those 2 containers and allow us to access our pod outside of our cluster.
    ```sh
    kubectl expose deployment sample-nginx --port=80 --type=LoadBalancer
    # "LoadBalancer" is the service type. We have different types of services, depending on the use case you can choose the right one.
    # kubectl expose deployment simple-devops-project --port=8080 --type=LoadBalancer
    kubectl get services -o wide
-   # By running above command , you'll see the LoadBalancer service we created. (You'll not get an External IP, you'll see it "pending"). Also you'll see a field Ports: 80/30001:TCP --> 80 is the port accessible within the cluster, 30001 is the port used to access the application from outside the cluster, so we'll use port 30001 from the browser <master_server_ip>:<port>.
+   # By running above command , you'll see the LoadBalancer service we created. (You'll not get an External IP, you'll see it "pending"). Also you'll see a field Ports: 80/30001:TCP or could be 80:30347:TCP --> 80 is the port accessible within the cluster, 30001 or whatevver other port it maps to, is the port used to access the application from outside the cluster, so we'll use that port from the browser <master_server_ip>:<port>.
    ```
-   Not you'll need to expose port 30001 used above in the security group used in AWS. So add to the security group the following ruke: <br/>
+   Not you'll need to expose port 30001 used above in the ec2 instance security group of the MASTER NODE. So add to the security group the following ruke: <br/>
    Type: Custom TCP  /  Protocol: TCP / Port range: 30001 / Source: 0.0.0.0/0
    
    To delete a pod you do:  kubectl delete pod <pod_id>   <br/>
