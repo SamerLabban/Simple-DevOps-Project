@@ -214,7 +214,7 @@
    Type: Custom TCP  /  Protocol: TCP / Port range: 30001 / Source: 0.0.0.0/0
    
    To delete a pod you do:  kubectl delete pod <pod_id>   <br/>
-   Once you delete the pods, the application won't be accessible, but our deployment detects that the pods are not running and re0-creates new pods. <br/>
+   Once you delete the pods, the application won't be accessible, but our deployment detects that the pods are not running and re-creates new pods. <br/>
    In real world, we do not create services using commands, but we'll use yaml file that has all the definitions. And whenever there is a new deployment we just need to remove the old containers, and it'll remove the old image and create add the new one.
    
    
