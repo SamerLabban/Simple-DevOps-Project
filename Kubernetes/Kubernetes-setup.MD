@@ -197,7 +197,7 @@
     wget <internal IP>:80
     # Port 80 is the default port, so even if you do not specify it, you can still access your application: 
     wget <internal IP>
-    # After running the wget command, if you do "ls", you'll see index.html file created. This is the file which we'll access later from the browser.
+    # After running the wget command, if you do "ls", you'll see index.html file created. If you open the "index.html" file, you'll see the default nginx file.This is the file which we'll access later from the browser.
     ```
 
 1. Expose the deployment as service. This will create an ELB in front of those 2 containers and allow us to publicly access them.
