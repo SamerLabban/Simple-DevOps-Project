@@ -1,8 +1,9 @@
 ## Create Deployment and Service using kubectl commands
 
 ### Deployments
-- Connect to your kubernetes ec2 instance.
+- Connect to your master server.
 - Impersonate as root: sudo - u
+- Under /root, create the 2 files below.
 - Create yml file valaxy-deploy.yml and copy the content from "Simple-DevOps-Project/Kubernetes/valaxy-deploy.yml"
 - Create yml file valaxy-service.yml and copy the content from "Simple-DevOps-Project/Kubernetes/valaxy-service.yml"
 - Create the deployment by running (this will apply any instructions in the file "-f valaxy-deploy.yml"): kubectl apply -f valaxy-deploy.yml
