@@ -195,6 +195,7 @@
     # Once you do get pods, you'll see the 2 pods created,and you'll see 2 internal IPs, which can be used to connect to our application.
     # So far our application is accessible internally: 
     wget <internal IP>:80
+    --> wget localhost:8080
     # Port 80 is the default port, so even if you do not specify it, you can still access your application: 
     wget <internal IP>
     # After running the wget command, if you do "ls", you'll see index.html file created. If you open the "index.html" file, you'll see the default nginx file.
@@ -210,7 +211,7 @@
    kubectl get services -o wide
    # By running above command , you'll see the LoadBalancer service we created. (You'll not get an External IP, you'll see it "pending"). Also you'll see a field Ports: 80/30001:TCP or could be 80:30347:TCP --> 80 is the port accessible within the cluster, 30001 or whatevver other port it maps to, is the port used to access the application from outside the cluster, so we'll use that port from the browser <master_server_ip>:<port>.
    ```
-   Not you'll need to expose port 30001 used above in the ec2 instance security group of the MASTER NODE. So add to the security group the following ruke: <br/>
+   Not you'll need to expose port 30001 used above in the ec2 instance security group of the MASTER NODE. So add to the security group the following rule: <br/>
    Type: Custom TCP  /  Protocol: TCP / Port range: 30001 / Source: 0.0.0.0/0
    
    To delete a pod you do:  kubectl delete pod <pod_id>   <br/>
