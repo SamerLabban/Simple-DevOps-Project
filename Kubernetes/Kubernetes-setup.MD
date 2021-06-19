@@ -174,7 +174,7 @@
    kubectl get nodes  --> this will show you the nodes (1 master and 2 client nodes).  <br/>
    If you get an error running the above command, saying "connection to the server localhost:8080 was refused - did you specify the right host or port" --> then on the local host delete and rectreate the file .ssh/known_hosts, and add into it localhost   <br/>
    kubectl get pods --> once we create pods, you can see them by running this command.  Once you deploy and run this command, you'll see under "READY" column something like 1/1 --> the first "1" is for pods and the second "1" is for containers. Pods and containers are different. Within a pod our containers run. <br/>
-   kubectl get nodes -o wide --> this gives more details about the pods, like the internal IP used to access the application, and the node IPs (each pod is created a different node to make it highly available). <br/>
+   kubectl get nodes -o wide --> this gives more details about the nodes, like the internal IP used to access the application, and the node IPs (each pod is created a different node to make it highly available). <br/>
    kubectl get deploy  or kubectl get deployments --> this will show you deployments done.   <br/>
    kubectl get service --> you'll see services there once created. "kubrnetes" service you see is by default created with the cluster. <br/>
    We will create a deployment, and whenever we create a deploy, in the background it'll create pods. Deploy is going to create replica set and the replica set are going to make sure your pods are always available. <br/>
