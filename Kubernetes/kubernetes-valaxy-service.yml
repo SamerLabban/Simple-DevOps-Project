@@ -7,5 +7,7 @@
   
   tasks:
   - name: create a service
-    command: kubectl apply -f valaxy-service.yml
+    # command: kubectl apply -f valaxy-service.yml
+    # above is the path to the valaxy-service.yml file on kubernetes host, not on ansible host where this kubernetes-valaxy-service.yml file is running.
+    command: kubectl apply -f ~/kubernetes/valaxy-service.yml
 
