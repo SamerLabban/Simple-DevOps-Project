@@ -30,8 +30,8 @@
 
 ### Accessing the application
 - Open the port defined in the services file (in our case it is 31200) in the security group in AWS. <br/>
-  Add rule: Custom TCP Rule - Port: 32100 - Source: 0.0.0.0/0
-- On the browser enter: <master_instance_public_or_dns_name>:32100  --> you'll be able to access the default tomcat page  <br/>
-                        <master_instance_public_or_dns_name>:32100/webapp --> you'll access the html file.
+  Add rule: Custom TCP Rule - Port: 31200 - Source: 0.0.0.0/0
+- On the browser enter: <master_instance_public_or_dns_name>:31200  --> you'll be able to access the default tomcat page  <br/>
+                        <master_instance_public_or_dns_name>:31200/webapp --> you'll access the html file.
 
 Note: Whenever there is an update in the code, it should create a new image, and with the new image we should create our new deployment. FOr that we'll write our ansible playbook.
