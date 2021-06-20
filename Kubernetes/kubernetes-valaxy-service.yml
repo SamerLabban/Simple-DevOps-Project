@@ -3,7 +3,8 @@
   hosts: kubernetes
   # the playbook will run on ips under "kubernetes" group in the hosts file
   # become: true
-  user: ubuntu
+  # user: ubuntu
+  user: root
   
   tasks:
   - name: create a service
