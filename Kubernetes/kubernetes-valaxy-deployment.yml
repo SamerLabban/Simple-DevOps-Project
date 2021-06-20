@@ -9,9 +9,9 @@
  
   tasks: 
   - name: create a deployment
-    command: kubectl apply -f valaxy-deploy.yml
+    # command: kubectl apply -f valaxy-deploy.yml
     # above is the path to the valaxy-deploy.yml file on kubernetes host, not on ansible host where this kubernetes-valaxy-deploy.yml file is running.
-    # command: kubectl apply -f ~/kubernetes/valaxy-deploy.yml
+    command: kubectl apply -f ~/kubernetes/valaxy-deploy.yml
  
   - name: update deployment with new pods if image updated in docker hub
     command: kubectl rollout restart deployment.v1.apps/valaxy-deployment
