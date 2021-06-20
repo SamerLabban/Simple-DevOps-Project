@@ -82,11 +82,13 @@
     # if you do: kubestl get service --> you'll see on which port the service is running. We hard-coded it to run on port 31200.
     # So on the browser we can access our application on: <master_node_dns_name_or ip>:31200/webapp
     # Above should be master node ip, not kubernetes host ip. 
+    # Exaple: http://3.96.126.187:31200/webapp/
     # Also on master node --> security group --> Inbound Rules --> Add rule: Custom TCP Rule - Port: 31200 - Source: 0.0.0.0/0
     ```
     We need ansible to run the deployment and services, to provide authentication to the cluster from Jenkins. We cannot run the kubernetes files directly. Also if any pre-requisits are needed, such as image creation, we need ansible to do that.
 
 1. Access application suing service IP
    ```sh
-   wget <kubernetes-Master-IP>:31200
+   wget <kubernetes-Master-IP>:31200/webapp
+   Example: wget http://3.96.126.187:31200/webapp/
    ```
