@@ -31,7 +31,7 @@ Outbound rules:  <br/>
 2. Jenkins should need access to the tomcat server to deploy build artifacts. setup credentials to enable this process. use credentials option on Jenkins home page.
 
 - setup credentials
-  - `credentials` > `jenkins` > `Global credentials` > `add credentials`
+  - `Manage Jenkins` > `Manage Credentials` > `Manage Credentials` > `global` > `add credentials`
     - Username	: `deployer`
     - Password : `deployer`
     - id      :  `deployer`
