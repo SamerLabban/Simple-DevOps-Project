@@ -45,7 +45,7 @@ Outbound rules:  <br/>
    - *Source Code Management:*
       - Repository: `https://github.com/yankils/hello-world.git`
       - Branches to build : `*/master`  
-   - *Poll SCM* :      - `* * * *`  <br/>
+   - *Poll SCM* :      `* * * * *`  <br/>
      You can have the job run everytime you commit to git repo. For that in your jenkins job, you need to check "Poll SCM" under "Build Triggers", and then you the specify schedule as ***** --> which means poll scm every minute every hour every day every week every month
 
    - *Build:*
