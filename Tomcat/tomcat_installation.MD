@@ -8,19 +8,21 @@
    ```sh 
    # Create tomcat directory
    cd /opt
-   wget http://mirrors.fibergrid.in/apache/tomcat/tomcat-8/v8.5.35/bin/apache-tomcat-8.5.35.tar.gz
-   tar -xvzf /opt/apache-tomcat-8.5.35.tar.gz
+   # wget http://mirrors.fibergrid.in/apache/tomcat/tomcat-8/v8.5.35/bin/apache-tomcat-8.5.35.tar.gz --> does not work anymore
+   # tar -xvzf /opt/apache-tomcat-8.5.35.tar.gz
+   wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.17/bin/apache-tomcat-10.0.17.tar.gz
+   tar -xvzf /opt/apache-tomcat-10.0.17.tar.gz
    ```
 1. give executing permissions to startup.sh and shutdown.sh which are under bin. 
    ```sh
-   chmod +x /opt/apache-tomcat-8.5.35/bin/startup.sh 
-   shutdown.sh
+   chmod +x /opt/apache-tomcat-10.0.17/bin/startup.sh 
+   chmod +x /opt/apache-tomcat-10.0.17/bin/shutdown.sh
    ```
 
 1. create link files for tomcat startup.sh and shutdown.sh 
    ```sh
-   ln -s /opt/apache-tomcat-8.5.35/bin/startup.sh /usr/local/bin/tomcatup
-   ln -s /opt/apache-tomcat-8.5.35/bin/shutdown.sh /usr/local/bin/tomcatdown
+   ln -s /opt/apache-tomcat-10.0.17/bin/startup.sh /usr/local/bin/tomcatup
+   ln -s /opt/apache-tomcat-10.0.17/bin/shutdown.sh /usr/local/bin/tomcatdown
    tomcatup
    ```
   #### Check point :
