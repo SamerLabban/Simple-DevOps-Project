@@ -44,6 +44,8 @@ So far we have completed the installation of maven software to support maven plu
   - `Manage Jenkins` > `Global Tool Configuration` > `Maven`
   - `Add Maven` > Uncheck `Install automatically` since we already installed maven plugin. 
   - Specify the following:
+    ```
     Name: M2_HOME
-    MAVEN_HOME: /opt/maven
+    MAVEN_HOME: /opt/maven/apache-maven-3.8.4
+    ```
 
